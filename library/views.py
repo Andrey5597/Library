@@ -14,8 +14,11 @@ def home(request):
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
-        #'num_authors': num_authors,
-       # 'num_genres': num_genres,
+         #'num_authors': num_authors,
+         #'num_genres': num_genres,
     }
 
     return render(request, 'home.html', context=context)
+
+
+

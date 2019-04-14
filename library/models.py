@@ -28,6 +28,7 @@ class BookDescription(models.Model):
     published = models.DateField(verbose_name='Date of publish')
     number_of_pages = models.IntegerField(verbose_name='Number of pages')
     genre = models.CharField(max_length=20, verbose_name='Genre')
+    book_summary = models.OneToOneField('BookSummary', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.book_title

@@ -1,21 +1,22 @@
 from django.shortcuts import render
 from library.models import Book, BookInstance, BookDescription, BookSummary, BookComment, Shelf
+from django.views import generic
 
 
 def home(request):
-    '''select count (book_title) from library_book;'''
+    """select count (book_title) from library_book;"""
     num_books = Book.objects.all().count()
 
-    '''select count (id) from library_BookInstance;'''
+    """select count (id) from library_BookInstance;"""
     num_instances = BookInstance.objects.all().count()
 
-    ''' select count (id) from library_BookInstance where status='a'; '''
+    """ select count (id) from library_BookInstance where status='a'; """
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
 
-    '''select count (distinct author_name) from library_BookDescription;'''
+    """select count (distinct author_name) from library_BookDescription;"""
     num_authors = BookDescription.objects.values('author_name').distinct().count()
 
-    '''select count (distinct genre) from library_BookDescription;'''
+    """select count (distinct genre) from library_BookDescription;"""
     num_genres = BookDescription.objects.values('genre').distinct().count()
 
     context = {
@@ -29,4 +30,11 @@ def home(request):
     return render(request, 'home.html', context=context)
 
 
+class BookListView(generic.ListView):
+    model = BookDescription
+    context_object_name = 'book_list'
 
+    """select * from library_BookDescription;"""
+    queryset = BookDescription.objects.all()
+
+    template_name = 'library/book_list.html'

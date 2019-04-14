@@ -38,3 +38,9 @@ class BookListView(generic.ListView):
     queryset = BookDescription.objects.all()
 
     template_name = 'library/book_list.html'
+
+
+class BookDetailView(generic.DetailView):
+    model = BookDescription
+    context_object_name = 'BookDescription'
+    template_name = 'library/book_info.html'

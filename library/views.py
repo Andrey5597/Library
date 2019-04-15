@@ -4,6 +4,9 @@ from django.views import generic
 
 
 def home(request):
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
     """select count (book_title) from library_book;"""
     num_books = Book.objects.all().count()
 
@@ -25,6 +28,7 @@ def home(request):
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
         'num_genres': num_genres,
+        'num_visits': num_visits,
     }
 
     return render(request, 'home.html', context=context)

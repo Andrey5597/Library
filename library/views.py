@@ -44,3 +44,13 @@ class BookDetailView(generic.DetailView):
     model = BookDescription
     context_object_name = 'BookDescription'
     template_name = 'library/book_info.html'
+
+
+class AuthorListView(generic.ListView):
+    model = BookDescription
+    context_object_name = 'author_list'
+
+    """select distinct author_name from library_BookDescription;"""
+    queryset = BookDescription.objects.values('author_name').distinct()
+
+    template_name = 'library/author_list.html'

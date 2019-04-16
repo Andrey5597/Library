@@ -20,7 +20,7 @@ class BookDescriptionAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'due_back')
+    list_display = ('book', 'status', 'rent', 'due_back')
     list_display_links = ('book',)
     list_filter = ('status', 'due_back')
     search_fields = ('book',)

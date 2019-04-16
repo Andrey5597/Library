@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from library.models import Book, BookInstance, BookDescription, BookSummary, BookComment, Shelf
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def home(request):
@@ -58,3 +59,12 @@ class AuthorListView(generic.ListView):
     queryset = BookDescription.objects.values('author_name').distinct()
 
     template_name = 'library/author_list.html'
+
+
+class BooksRentedByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    template_name = 'library/books_rented_by_user.html'
+    context_object_name = 'rent_list'
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(rent=self.request.user).filter(status__exact='o').order_by('due_back')

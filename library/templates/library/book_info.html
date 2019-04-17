@@ -14,7 +14,7 @@
     <h4>Copies:</h4>
     {% for copy in BookDescription.bookinstance_set.all %}
         <hr>
-      <p>{{ copy.get_status_display }}</p>
+        <p>{{ copy.get_status_display }}</p>
       {% if copy.status != 'a' %}
         <p><strong>Due to be returned:</strong> {{copy.due_back}}</p>
       {% endif %}

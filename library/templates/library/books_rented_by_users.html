@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Rented books</h1>
+
+    {% if rent_list %}
+    <ul>
+
+      {% for book in rent_list %}
+      <li class="{% if book.is_overdue %}text-danger{% endif %}">
+          {{book.book.book_title}}
+          <p><strong> Rented by : </strong> {{book.rent.username}} </p>
+          <p><strong>Must return: </strong> {{ book.due_back }} </p>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no books rented.</p>
+    {% endif %}       
+{% endblock %}

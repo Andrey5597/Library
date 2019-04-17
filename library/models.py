@@ -71,6 +71,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
+        permissions = (("can_see_all_rented_books", "List of rented books"),)
 
     def __str__(self):
         return self.book.book_title

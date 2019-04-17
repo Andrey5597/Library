@@ -2,6 +2,7 @@ from django.shortcuts import render
 from library.models import Book, BookInstance, BookDescription, BookSummary, BookComment, Shelf
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 def home(request):
@@ -45,7 +46,7 @@ class BookListView(generic.ListView):
     template_name = 'library/book_list.html'
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = BookDescription
     context_object_name = 'BookDescription'
     template_name = 'library/book_info.html'
@@ -68,3 +69,13 @@ class BooksRentedByUserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(rent=self.request.user.id).filter(status__exact='o').order_by('due_back')
+
+
+class BooksRentedByUsersListView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('library.can_see_all_rented_books',)
+    model = BookInstance
+    template_name = 'library/books_rented_by_users.html'
+    context_object_name = 'rent_list'
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')

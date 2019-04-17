@@ -53,7 +53,7 @@ class BookComment(models.Model):
 
 
 class BookInstance(models.Model):
-    book = models.ForeignKey('Book', on_delete=models.PROTECT, null=True)
+    book = models.ForeignKey('BookDescription', on_delete=models.PROTECT, null=True)
     due_back = models.DateField(null=True, blank=True)
     LOAN_STATUS = (
         ('o', 'On loan'),

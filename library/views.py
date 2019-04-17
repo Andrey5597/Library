@@ -67,4 +67,4 @@ class BooksRentedByUserListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'rent_list'
 
     def get_queryset(self):
-        return BookInstance.objects.filter(rent=self.request.user).filter(status__exact='o').order_by('due_back')
+        return BookInstance.objects.filter(rent=self.request.user.id).filter(status__exact='o').order_by('due_back')

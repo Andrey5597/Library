@@ -9,7 +9,19 @@
   <p><strong>Date of publish:</strong> {{ BookDescription.published }}</p>
   <p><strong>Pages:</strong> {{ BookDescription.number_of_pages }}</p>
   <p><strong>Summary:</strong> {{ BookDescription.book_summary.book_summary }}</p>
-
-  <p><strong>Copy:</strong> {{ BookInstance }}</p>
-
+  <hr>
+    <div>
+    <h4>Copies:</h4>
+    {% for copy in BookDescription.bookinstance_set.all %}
+        <hr>
+      <p>{{ copy.get_status_display }}</p>
+      {% if copy.status != 'a' %}
+        <p><strong>Due to be returned:</strong> {{copy.due_back}}</p>
+      {% endif %}
+      <p ><strong>Id:</strong> {{copy.id}}</p>
+    {% endfor %}
+    </div>
 {% endblock %}
+
+
+

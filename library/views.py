@@ -3,7 +3,8 @@ from library.models import Book, BookInstance, BookDescription, BookSummary, Boo
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
 
 def home(request):
     num_visits = request.session.get('num_visits', 0)
@@ -68,9 +69,8 @@ class BooksRentedByUserListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'rent_list'
 
     def get_queryset(self):
-        '''select * from library_BookInstance inner join auth_user on library_BookInstance.rent_id=auth_user.id
-        where library_BookInstance.status='o' order by due_back
-        '''
+        ''' select * from library_BookInstance inner join auth_user on library_BookInstance.rent_id=auth_user.id
+        where library_BookInstance.status='o' order by due_back '''
         return BookInstance.objects.filter(rent=self.request.user.id).filter(status__exact='o').order_by('due_back')
 
 
@@ -83,3 +83,17 @@ class BooksRentedByUsersListView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         """select * from library_BookInstance where status='o' order by due_back;"""
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
+
+
+class BookInstanceCreate(CreateView):
+    model = BookInstance
+    fields = '__all__'
+    success_url = reverse_lazy('books')
+
+
+class BookInstanceUpdate(UpdateView):
+    model = BookInstance
+    fields = ['book', 'due_back', 'status', 'rent']
+    success_url = reverse_lazy('books')
+
+

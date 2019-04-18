@@ -75,3 +75,7 @@ class BookInstance(models.Model):
 
     def __str__(self):
         return self.book.book_title
+
+    def get_absolute_url(self):
+        return reverse('copy_update', args=[str(self.pk)])
+

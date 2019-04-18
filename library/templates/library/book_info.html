@@ -15,6 +15,11 @@
     {% for copy in BookDescription.bookinstance_set.all %}
         <hr>
         <p>{{ copy.get_status_display }}</p>
+        {% if perms.library.can_see_all_rented_books %}
+      <b> For librarians </b>
+      <a href="{{ copy.get_absolute_url  }}"> Change status of copy </a>
+    {% endif %}
+
       {% if copy.status != 'a' %}
         <p><strong>Due to be returned:</strong> {{copy.due_back}}</p>
       {% endif %}

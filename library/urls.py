@@ -8,4 +8,7 @@ urlpatterns = [
     path('authors/', views.AuthorListView.as_view(), name='authors'),
     path('mybooks/', views.BooksRentedByUserListView.as_view(), name='my-rented'),
     path('rentedbooks/', views.BooksRentedByUsersListView.as_view(), name='rented-books'),
+    path('copy/create/', views.BookInstanceCreate.as_view(), name='copy_create'),
+    path('copy/<int:pk>/update/', views.BookInstanceUpdate.as_view(), name='copy_update'),
+
 ]

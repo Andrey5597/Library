@@ -68,6 +68,9 @@ class BooksRentedByUserListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'rent_list'
 
     def get_queryset(self):
+        '''select * from library_BookInstance inner join auth_user on library_BookInstance.rent_id=auth_user.id
+        where library_BookInstance.status='o' order by due_back
+        '''
         return BookInstance.objects.filter(rent=self.request.user.id).filter(status__exact='o').order_by('due_back')
 
 
@@ -78,4 +81,5 @@ class BooksRentedByUsersListView(PermissionRequiredMixin, generic.ListView):
     context_object_name = 'rent_list'
 
     def get_queryset(self):
+        """select * from library_BookInstance where status='o' order by due_back;"""
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')

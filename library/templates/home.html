@@ -1,11 +1,16 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>Library "Home page" </h1>
+<h1>Welcome to our library</h1>
 
-<h2>Library content</h2>
+<p>To view the books in our library, click on the appropriate link in sidebar.</p>
+<p>You can log in to watch for books you have borrowed and date
+  of their return</p>
+<p>If you don't have login and password,
+  visit our library at Prospect Karl Marx 22 for registration</p>
 
-  <p>The library has the following record counts:</p>
+
+  <p>Library statistic:</p>
   <ul>
     <li><strong>Books:</strong> {{ num_books }}</li>
     <li><strong>Copies:</strong> {{ num_instances }}</li>
@@ -14,6 +19,8 @@
     <li><strong>Genres:</strong> {{num_genres}}</li>
   </ul>
 
-<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+
+<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %}
+  time{% else %} times{% endif %}.</p>
 
 {% endblock %}

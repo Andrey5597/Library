@@ -5,7 +5,7 @@ from datetime import date
 
 
 class Book(models.Model):
-    shelf_id = models.ForeignKey('Shelf', on_delete=models.PROTECT, null=True)
+    shelf_id = models.ForeignKey('Shelf', on_delete=models.SET_NULL, null=True)
     book_title = models.CharField(max_length=50, verbose_name='Title', default='Book')
 
     def __str__(self):
@@ -49,11 +49,11 @@ class BookSummary(models.Model):
 
 class BookComment(models.Model):
     comment = models.TextField(max_length=100, null=True, blank=True, verbose_name='Comment')
-    book = models.ForeignKey('Book', on_delete=models.PROTECT)
+    book = models.ForeignKey('Book', on_delete=models.CASCADE)
 
 
 class BookInstance(models.Model):
-    book = models.ForeignKey('BookDescription', on_delete=models.PROTECT, null=True)
+    book = models.ForeignKey('BookDescription', on_delete=models.CASCADE, null=True)
     due_back = models.DateField(null=True, blank=True)
     LOAN_STATUS = (
         ('o', 'On loan'),

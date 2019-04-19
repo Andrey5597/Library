@@ -9,6 +9,10 @@
   <p><strong>Date of publish:</strong> {{ BookDescription.published }}</p>
   <p><strong>Pages:</strong> {{ BookDescription.number_of_pages }}</p>
   <p><strong>Summary:</strong> {{ BookDescription.book_summary.book_summary }}</p>
+  {% if perms.library.can_see_all_rented_books %}
+      <b> For librarians </b>
+      <p><strong>Shelf :</strong> {{ BookDescription.book.shelf_id }}</p>
+  {% endif %}
   <hr>
     <div>
     <h4>Copies:</h4>

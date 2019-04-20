@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from library.models import Book, BookInstance, BookDescription, BookSummary, BookComment, Shelf
+from library.models import Book, BookInstance, BookDescription, BookComment
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.db.models import Q
+
 
 def home(request):
     num_visits = request.session.get('num_visits', 0)
@@ -37,14 +39,19 @@ def home(request):
     return render(request, 'home.html', context=context)
 
 
-class BookListView(generic.ListView):
-    model = BookDescription
-    context_object_name = 'book_list'
-
+def book_list(request):
+    query = request.GET.get('q')
     """select * from library_BookDescription;"""
     queryset = BookDescription.objects.all()
+    if query:
+        queryset = queryset.filter(
+            Q(book_title__icontains=query) |
+            Q(author_name__icontains=query) |
+            Q(genre__icontains=query)
+        )
 
-    template_name = 'library/book_list.html'
+    context = {'book_list': queryset}
+    return render(request, 'library/book_list.html', context=context)
 
 
 class BookDetailView(LoginRequiredMixin, generic.DetailView):
@@ -93,7 +100,5 @@ class BookInstanceCreate(CreateView):
 
 class BookInstanceUpdate(UpdateView):
     model = BookInstance
-    fields = ['book', 'due_back', 'status', 'rent']
+    fields = ['due_back', 'status', 'rent']
     success_url = reverse_lazy('books')
-
-

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Library</title>
+    <style type="text/css">
+    TD {vertical-align: TOP;}
+    #col1 {width: 20%;}
+    #col2 {width: 60%;}
+    #col3 {width: 20%;}
+    </style>
+ </head>
+ <body>
+  <table width="95%" cellpadding="5" cellspacing="0">
+   <tr>
+    <td id="col1">
+  <ul >
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'books' %}">All books</a></li>
+    <li><a href="{% url 'authors' %}">All authors</a></li>
+  </ul>
+
+  <ul>
+  {% if user.is_authenticated %}
+     <li>User: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+     <li><a href="{% url 'my-rented' %}">My books</a></li>
+
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+   {% endif %}
+  </ul>
+
+    {% if perms.library.can_see_all_rented_books %}
+    <b> For librarians </b>
+    <ul>
+      <li><a href="{% url 'rented-books' %}">All rented books</a></li>
+      <li><a href="{% url 'copy_create' %}">Add a book copy</a></li>
+    {% endif %}
+  </ul>
+
+    </td>
+    <td id="col2">{% block content %}{% endblock %}</td>
+    <td id="col3">
+
+       <form id="searchform"  action="/library/books/" method="get"  accept-charset="utf-8">
+       <button class="searchbutton" type="submit">
+        Search
+      </button>
+      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Type here">
+       </form>
+
+    </td>
+   </tr>
+  </table>
+ </body>
+</html>

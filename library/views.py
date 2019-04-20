@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from library.models import Book, BookInstance, BookDescription, BookComment
+from library.models import Book, BookInstance, BookDescription
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -68,6 +68,16 @@ class AuthorListView(generic.ListView):
     queryset = BookDescription.objects.values('author_name').distinct()
 
     template_name = 'library/author_list.html'
+
+
+class GenreListView(generic.ListView):
+    model = BookDescription
+    context_object_name = 'genre_list'
+
+    """select distinct genre from library_BookDescription;"""
+    queryset = BookDescription.objects.values('genre').distinct()
+
+    template_name = 'library/genre_list.html'
 
 
 class BooksRentedByUserListView(LoginRequiredMixin, generic.ListView):

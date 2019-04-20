@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Shelf, BookComment, BookDescription, BookSummary, BookInstance
+from .models import Book, Shelf, BookDescription, BookSummary, BookInstance
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -14,9 +14,9 @@ class ShelfAdmin(admin.ModelAdmin):
 
 class BookDescriptionAdmin(admin.ModelAdmin):
     list_display = ('book_title', 'isbn', 'author_name',
-                    'genre')
+                    'genre', 'published', 'number_of_pages')
     list_display_links = ('book_title',)
-    search_fields = ('author_name', 'genre')
+    search_fields = ('author_name', 'genre', 'book_title')
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
@@ -29,6 +29,5 @@ class BookInstanceAdmin(admin.ModelAdmin):
 admin.site.register(BookInstance, BookInstanceAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Shelf, ShelfAdmin)
-admin.site.register(BookComment)
 admin.site.register(BookSummary)
 admin.site.register(BookDescription, BookDescriptionAdmin)

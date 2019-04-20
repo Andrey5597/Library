@@ -19,6 +19,7 @@
     <li><a href="{% url 'home' %}">Home</a></li>
     <li><a href="{% url 'books' %}">All books</a></li>
     <li><a href="{% url 'authors' %}">All authors</a></li>
+    <li><a href="{% url 'genres' %}">All genres</a></li>
   </ul>
 
   <ul>
@@ -44,11 +45,11 @@
     <td id="col2">{% block content %}{% endblock %}</td>
     <td id="col3">
 
-       <form id="searchform"  action="/library/books/" method="get"  accept-charset="utf-8">
+       <form id="searchform"  action="/library/books/" method="get"  accept-charset="utf-8" >
        <button class="searchbutton" type="submit">
         Search
       </button>
-      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Type here">
+      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Type here" value='{{request.GET.q}}'/>
        </form>
 
     </td>

@@ -47,11 +47,6 @@ class BookSummary(models.Model):
         return f'summary of {self.book}'
 
 
-class BookComment(models.Model):
-    comment = models.TextField(max_length=100, null=True, blank=True, verbose_name='Comment')
-    book = models.ForeignKey('Book', on_delete=models.CASCADE)
-
-
 class BookInstance(models.Model):
     book = models.ForeignKey('BookDescription', on_delete=models.CASCADE, null=True)
     due_back = models.DateField(null=True, blank=True)
